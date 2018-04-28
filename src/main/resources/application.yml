@@ -1,6 +1,6 @@
 stubrunner:
   # artifact ids containing stubs to be downloaded
-  ids: com.github.hippoom:ldd-backend-stubs:0.1.0:stubs:9999
+  ids: com.github.hippoom:ldd-backend-stubs:+:stubs:9999
   stubs-mode: local
   # url of where the stubs reside
 #  repository-root: http://localhost:8081/repository/maven-releases/
