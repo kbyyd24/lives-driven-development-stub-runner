@@ -22,6 +22,8 @@ dependencies {
 
 === With Docker
 
+See in https://hub.docker.com/r/yuexiang/ldd-stub-runner/[DockerHub].
+
 You can start the stub runner by docker-compose, for example:
 
 [source,yml]
