@@ -1,0 +1,42 @@
+= Stub Runner of Contracts for Lives Driven Development
+
+image:https://travis-ci.org/kbyyd24/lives-driven-development-stub-runner.svg?branch=master["Build Status", link="https://travis-ci.org/kbyyd24/lives-driven-development-stub-runner"]
+
+This repo helps you to create a stub runner of contracts, and provides a Docker image to start it.
+
+== Why we need it
+
+In https://github.com/Hippoom/lives-driven-development[lives driven development], we used https://cloud.spring.io/spring-cloud-static/spring-cloud-contract/2.0.0.M8/single/spring-cloud-contract.html#_customization[extending DSL] for our contracts.
+But the dependencies cannot be added into the classpath by default, we have to add it by ourselves.
+
+You can see the dependency in `build.gradle`. This is also an example for you if you are using extending DSl in your contract too.
+
+[source,groovy]
+====
+dependencies {
+  runtime("com.github.hippoom:test-data-builder:${testDataBuilderVersion}")
+}
+====
+
+== How to use it
+
+=== With Docker
+
+You can start the stub runner by docker-compose, for example:
+
+[source,yml]
+====
+include::docker-compose.yml[]
+====
+
+ You have to set all the 5 environment variables, I'm going to fix this.
+
+=== Without Docker
+
+You can change the configuration in `application.yml` for your contracts.
+By default, it read environment variables.
+
+[source,yml]
+===
+include::src/main/resources/application.yml[]
+===
