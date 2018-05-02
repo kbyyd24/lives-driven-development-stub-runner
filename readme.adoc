@@ -37,6 +37,6 @@ You can change the configuration in `application.yml` for your contracts.
 By default, it read environment variables.
 
 [source,yml]
-===
+====
 include::src/main/resources/application.yml[]
-===
+====
