@@ -1,0 +1,17 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+services:
+  - docker
+
+before_install:
+  - chmod +x ./push_image.sh
+
+jobs:
+  include:
+    - stage: build_image
+      script: ./gradlew clean stubDocker
+    - stage: publish_image
+      script: ./publish_image.sh
