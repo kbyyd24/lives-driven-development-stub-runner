@@ -62,6 +62,8 @@ docker {
 
 task stubDocker(type: Docker, dependsOn: build) {
 //    switchUser('root')
+    applicationName = project.name
+    tag = "yuexiang/${project.name}"
     addFile(file("${buildDir}/libs/${rootProject.name}-${version}.jar"), "/root/stub-runner.jar")
     exposePort(9999)
     defaultCommand(["java", "-jar", "/root/stub-runner.jar"])

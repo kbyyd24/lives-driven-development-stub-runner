@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USERNAME} --password-stdin
 docker push com.github.kbyyd24/ldd-stub-runner:0.0.1-SNAPSHOT
 docker logout
