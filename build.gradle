@@ -1,8 +1,10 @@
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+
 buildscript {
     ext {
         springBootVersion = '2.0.1.RELEASE'
         testDataBuilderVersion = '0.5.0'
-        dockerPluginVersion = '1.2'
+        dockerPluginVersion = '3.2.8'
     }
     repositories {
         jcenter()
@@ -14,22 +16,22 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath "com.github.hippoom:test-data-builder:${testDataBuilderVersion}"
-        classpath "se.transmode.gradle:gradle-docker:${dockerPluginVersion}"
+        classpath "com.bmuschko:gradle-docker-plugin:${dockerPluginVersion}"
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'application'
-apply plugin: 'docker'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.bmuschko.docker-remote-api'
+
+
+//apply from: "${rootProject.projectDir}/gradle/docker.gradle"
 
 group = 'com.github.kbyyd24'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
-
-mainClassName = "com.github.kbyyd24.lddstubrunner.LddStubRunnerApplication"
 
 repositories {
     jcenter()
@@ -48,6 +50,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.cloud:spring-cloud-starter-contract-stub-runner')
     runtime("com.github.hippoom:test-data-builder:${testDataBuilderVersion}")
+    compile("com.bmuschko:gradle-docker-plugin:${dockerPluginVersion}")
 }
 
 dependencyManagement {
@@ -57,14 +60,17 @@ dependencyManagement {
 }
 
 docker {
-    baseImage = 'java'
+    registryCredentials {
+        username = "$System.env.DOCKER_USERNAME"
+        password = "$System.env.DOCKER_PASSWORD"
+        email = "$System.env.DOCKER_EMAIL"
+    }
 }
 
-task stubDocker(type: Docker, dependsOn: build) {
-//    switchUser('root')
-    applicationName = project.name
-    tag = "yuexiang/${project.name}"
-    addFile(file("${buildDir}/libs/${rootProject.name}-${version}.jar"), "/root/stub-runner.jar")
-    exposePort(9999)
-    defaultCommand(["java", "-jar", "/root/stub-runner.jar"])
+task buildStubDockerfile(type: Dockerfile, dependsOn: build) {
+    from 'java'
+    user 'root'
+    addFile "${buildDir}/libs/${rootProject.name}-${version}.jar", "/root/stub-runner.jar"
+    exposePort 9999
+    defaultCommand "java", "-jar", "/root/stub-runner.jar"
 }
