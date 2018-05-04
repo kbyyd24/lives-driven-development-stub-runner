@@ -1,3 +1,4 @@
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 
 buildscript {
@@ -25,7 +26,6 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.bmuschko.docker-remote-api'
-
 
 //apply from: "${rootProject.projectDir}/gradle/docker.gradle"
 
@@ -68,9 +68,20 @@ docker {
 }
 
 task buildStubDockerfile(type: Dockerfile, dependsOn: build) {
+    doFirst {
+        copy {
+            from "${buildDir}/libs/${rootProject.name}-${version}.jar"
+            into "${buildDir}/docker"
+        }
+    }
     from 'java'
     user 'root'
-    addFile "${buildDir}/libs/${rootProject.name}-${version}.jar", "/root/stub-runner.jar"
+    addFile "${rootProject.name}-${version}.jar", "/root/stub-runner.jar"
     exposePort 9999
     defaultCommand "java", "-jar", "/root/stub-runner.jar"
+}
+
+task buildStubDockerImage(type: DockerBuildImage, dependsOn: buildStubDockerfile) {
+    inputDir = file("${buildDir}/docker")
+    tags = ["yuexiang/ldd-stub-runner:${version}" as String] as Set<String>
 }
