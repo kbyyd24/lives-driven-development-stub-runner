@@ -84,10 +84,10 @@ task buildStubDockerfile(type: Dockerfile, dependsOn: build) {
 
 task buildStubDockerImage(type: DockerBuildImage, dependsOn: buildStubDockerfile) {
     inputDir = file("${buildDir}/docker")
-    tags = ["yuexiang/ldd-stub-runner:${version}" as String] as Set<String>
+    tags = ["${System.env.DOCKER_USERNAME}/ldd-stub-runner:${version}" as String] as Set<String>
 }
 
 task pushStubDockerImage(type: DockerPushImage) {
-    imageName = "yuexiang/ldd-stub-runner"
+    imageName = "{$System.env.DOCKER_USERNAME}/ldd-stub-runner"
     tag = version as String
 }
