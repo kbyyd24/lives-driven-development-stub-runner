@@ -28,8 +28,6 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.bmuschko.docker-remote-api'
 
-//apply from: "${rootProject.projectDir}/gradle/docker.gradle"
-
 group = 'com.github.kbyyd24'
 version = '0.0.1'
 sourceCompatibility = 1.8
@@ -84,10 +82,10 @@ task buildStubDockerfile(type: Dockerfile, dependsOn: build) {
 
 task buildStubDockerImage(type: DockerBuildImage, dependsOn: buildStubDockerfile) {
     inputDir = file("${buildDir}/docker")
-    tags = ["${System.env.DOCKER_USERNAME}/ldd-stub-runner:${version}" as String] as Set<String>
+    tags = ["${System.env.DOCKER_USERNAME}/${rootProject.name}:${version}" as String] as Set<String>
 }
 
 task pushStubDockerImage(type: DockerPushImage) {
-    imageName = "${System.env.DOCKER_USERNAME}/ldd-stub-runner"
+    imageName = "${System.env.DOCKER_USERNAME}/${rootProject.name}"
     tag = version as String
 }
