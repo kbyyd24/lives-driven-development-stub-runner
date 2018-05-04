@@ -42,3 +42,12 @@ By default, it read environment variables.
 ====
 include::src/main/resources/application.yml[]
 ====
+
+== The Gradle Docker Plugin
+
+I have tried https://github.com/Transmode/gradle-docker but it cannot push the image by gradle.
+So I have to write a script to push it.
+
+After that, I found https://github.com/bmuschko/gradle-docker-plugin, this plugin helps me to write Dockerfile, build Docker image and push it to registry.
+But the document of it is not useful enough.
+For example, `DockerBuildImage` & `DockerPushImage` both have a String property named `tag`, but they have different meanings. It makes confused.
