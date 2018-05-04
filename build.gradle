@@ -88,6 +88,6 @@ task buildStubDockerImage(type: DockerBuildImage, dependsOn: buildStubDockerfile
 }
 
 task pushStubDockerImage(type: DockerPushImage) {
-    imageName = "{$System.env.DOCKER_USERNAME}/ldd-stub-runner"
+    imageName = "${System.env.DOCKER_USERNAME}/ldd-stub-runner"
     tag = version as String
 }
