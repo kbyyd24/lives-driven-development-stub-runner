@@ -1,7 +1,7 @@
 version: '3'
 services:
   spring-contract-stub-runner:
-    image: com.github.kbyyd24/ldd-stub-runner:0.0.1
+    image: ${DOCKER_USERNAME}/ldd-stub-runner:0.0.1
     volumes:
       - ~/.m2:/root/.m2
     ports:
