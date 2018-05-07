@@ -31,7 +31,6 @@ You can start the stub runner by docker-compose, for example:
 include::docker-compose.yml[]
 ====
 
- You have to set all the 5 environment variables, I'm going to fix this.
 
 === Without Docker
 

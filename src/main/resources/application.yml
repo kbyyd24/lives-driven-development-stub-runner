@@ -1,8 +1,8 @@
 stubrunner:
   # artifact ids containing stubs to be downloaded
-  ids: ${STUBRUNNER_IDS:com.github.hippoom:ldd-backend-stubs:+:stubs:9999}
-  stubs-mode: ${STUBRUNNER_STUBS_MODE:local}
+  ids: ${STUBRUNNER_IDS:}
+  stubs-mode: ${STUBRUNNER_STUBS_MODE:}
   # url of where the stubs reside
-  repository-root: ${STUBRUNNER_REPOSITORY_ROOT}
-  username: ${STUBRUNNER_USERNAME}
-  password: ${STUBRUNNER_PASSWORD}
+  repository-root: ${STUBRUNNER_REPOSITORY_ROOT:}
+  username: ${STUBRUNNER_USERNAME:}
+  password: ${STUBRUNNER_PASSWORD:}
